@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">PeronanlityTest</string>
+    <string name="app_name">PersonalityTest</string>
+    <string name="start_test">Start test</string>
+    <string name="landing_rationale">On a basic level, the personality of all humans falls into two categories:\nextroverts and introverts.\nAnswer a few quick questions to determine your category.</string>
+    <string name="start_title">Introvert or Extrovert?</string>
+    <string name="title_quiz">Quiz</string>
+    <string name="label_true">True</string>
+    <string name="label_false">False</string>
 </resources>

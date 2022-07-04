@@ -22,13 +22,12 @@ class QuestionRepo {
                 falseCount++;
             }
         }
-        val verdict: String;
-        if (trueCount > falseCount) {
-            verdict = "Introverted";
+        val verdict: String = if (trueCount > falseCount) {
+            "Introverted";
         } else if (falseCount > trueCount) {
-            verdict = "Extroverted";
+            "Extroverted";
         } else {
-            verdict = "BalancedL";
+            "BalancedL";
         }
         return verdict;
     }

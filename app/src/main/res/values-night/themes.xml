@@ -2,15 +2,43 @@
     <!-- Base application theme. -->
     <style name="Theme.PeronanlityTest" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/dark</item>
+        <item name="colorOnPrimary">@color/light</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondaryDark</item>
+        <item name="colorOnSecondary">@color/secondarylight</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="ButtonPri">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/medium</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text16</item>
+        <item name="android:background">@drawable/button_primary</item>
+        <item name="android:padding">@dimen/size10</item>
+        <item name="android:minWidth">@dimen/_150sdp</item>
+    </style>
+
+    <style name="ButtonSec">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/medium</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text16</item>
+        <item name="android:background">@drawable/button_secondary</item>
+        <item name="android:padding">@dimen/size10</item>
+        <item name="android:minWidth">@dimen/_150sdp</item>
+    </style>
+
+    <style name="TextBase">
+
     </style>
 </resources>

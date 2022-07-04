@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorPrimaryVariant">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:elevation="@dimen/_8sdp">
+
+            <TextView
+                style="@style/TextWhite"
+                android:layout_gravity="center"
+                android:fontFamily="@font/medium"
+                android:text="@string/title_quiz"
+                android:textSize="@dimen/text18" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            android:layout_alignParentBottom="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/quiz_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/size28">
+
+                <TextView
+                    android:id="@+id/text_question"
+                    style="@style/TextWhite"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="@dimen/size32"
+                    android:minLines="6"
+                    android:text="Question"
+                    android:textSize="@dimen/text16" />
+
+                <TextView
+                    android:id="@+id/button_true"
+                    style="@style/ButtonWhite"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="@dimen/size16"
+                    android:text="@string/label_true"
+                    android:textSize="@dimen/text16" />
+
+                <TextView
+                    android:id="@+id/button_false"
+                    style="@style/ButtonSec"
+                    android:layout_width="match_parent"
+                    android:text="@string/label_false"
+                    android:textSize="@dimen/text16" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

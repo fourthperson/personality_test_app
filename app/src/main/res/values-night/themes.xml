@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.PeronanlityTest" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.PeronanlityTest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/dark</item>
@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/secondaryDark</item>
         <item name="colorOnSecondary">@color/secondarylight</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -22,7 +22,19 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/text16</item>
         <item name="android:background">@drawable/button_primary</item>
-        <item name="android:padding">@dimen/size10</item>
+        <item name="android:padding">@dimen/size12</item>
+        <item name="android:minWidth">@dimen/_150sdp</item>
+    </style>
+
+    <style name="ButtonDark">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/medium</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text16</item>
+        <item name="android:background">@drawable/button_dark</item>
+        <item name="android:padding">@dimen/size12</item>
         <item name="android:minWidth">@dimen/_150sdp</item>
     </style>
 
@@ -38,7 +50,36 @@
         <item name="android:minWidth">@dimen/_150sdp</item>
     </style>
 
-    <style name="TextBase">
+    <style name="ButtonWhite">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/medium</item>
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textSize">@dimen/text16</item>
+        <item name="android:background">@drawable/button_white</item>
+        <item name="android:padding">@dimen/size10</item>
+        <item name="android:minWidth">@dimen/_150sdp</item>
+    </style>
 
+    <style name="TextBase">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/regular</item>
+        <item name="android:textColor">@color/textRegular</item>
+        <item name="android:textSize">@dimen/size16</item>
+    </style>
+
+    <style name="TextDark" parent="TextBase">
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
+    <style name="TextLight" parent="TextBase">
+        <item name="android:textColor">@color/textLighter</item>
+    </style>
+
+    <style name="TextWhite" parent="TextBase">
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

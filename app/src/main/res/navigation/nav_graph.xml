@@ -19,12 +19,16 @@
 
     <fragment
         android:id="@+id/quizFrag"
-        android:name="com.iak.perstest.ui.landing.LandingFrag"
+        android:name="com.iak.perstest.ui.quiz.QuizFrag"
         android:label="Quiz"
         tools:layout="@layout/frag_quiz" />
 
     <action
         android:id="@+id/actionLanding"
         app:destination="@id/landingFrag" />
+
+    <action
+        android:id="@+id/actionQuiz"
+        app:destination="@id/quizFrag" />
 
 </navigation>

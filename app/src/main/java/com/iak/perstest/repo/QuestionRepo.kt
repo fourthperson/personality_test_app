@@ -8,27 +8,26 @@ class QuestionRepo {
     }
 
     fun getQuestions(count: Int): List<String> {
-        val questions = Questions.questions.subList(0, count - 1);
-        return questions;
+        return Questions.questions.subList(0, count - 1)
     }
 
-    fun assessAnswers(questions: List<String>, answers: List<Boolean>): String {
-        var trueCount = 0;
-        var falseCount = 0;
+    fun assessAnswers(answers: List<Boolean>): String {
+        var trueCount = 0
+        var falseCount = 0
         for (answer in answers) {
             if (answer) {
-                trueCount++;
+                trueCount++
             } else {
-                falseCount++;
+                falseCount++
             }
         }
         val verdict: String = if (trueCount > falseCount) {
-            "Introverted";
+            "Introverted"
         } else if (falseCount > trueCount) {
-            "Extroverted";
+            "Extroverted"
         } else {
-            "BalancedL";
+            "Balanced"
         }
-        return verdict;
+        return verdict
     }
 }

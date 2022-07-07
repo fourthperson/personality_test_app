@@ -5,7 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import com.iak.perstest.repo.QuestionRepo
 
 class QuestionViewModel(application: Application) : AndroidViewModel(application) {
-    var repo = QuestionRepo.instance
+    private var repo = QuestionRepo.instance
 
-    
+    fun getQuestions(): List<String> {
+        return repo.getQuestions(10)
+    }
+
+    fun getAssessment(answers: List<Boolean>): String {
+        return repo.assessAnswers(answers)
+    }
 }

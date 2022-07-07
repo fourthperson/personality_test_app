@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.iak.perstest.R
 import com.iak.perstest.databinding.FragLandingBinding
 
 class LandingFrag : Fragment() {
@@ -27,7 +29,7 @@ class LandingFrag : Fragment() {
 
     private fun init() {
         layout.buttonStart.setOnClickListener {
-
+            findNavController().navigate(R.id.actionQuiz)
         }
     }
 }

@@ -23,6 +23,12 @@
         android:label="Quiz"
         tools:layout="@layout/frag_quiz" />
 
+    <fragment
+        android:id="@+id/resultsFrag"
+        android:name="com.iak.perstest.ui.quiz.QuizFrag"
+        android:label="Results"
+        tools:layout="@layout/frag_results" />
+
     <action
         android:id="@+id/actionLanding"
         app:destination="@id/landingFrag" />

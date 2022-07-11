@@ -6,4 +6,6 @@
     <string name="title_quiz">Quiz</string>
     <string name="label_true">True</string>
     <string name="label_false">False</string>
+    <string name="title_results">Results</string>
+    <string name="go_back">Go Back</string>
 </resources>

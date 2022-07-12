@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.iak.perstest.databinding.FragResultsBinding
 
-class FragResult : Fragment() {
+class ResultFrag : Fragment() {
     private var _binding: FragResultsBinding? = null
     private val layout get() = _binding!!
 

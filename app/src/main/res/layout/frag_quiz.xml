@@ -40,8 +40,21 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/top_bar"
-            android:layout_alignParentBottom="true" />
+            android:layout_above="@id/progress_bar"
+            android:layout_below="@id/top_bar" />
+
+        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_16sdp"
+            app:rpbBackgroundColor="?colorPrimary"
+            app:rpbCornerRadius="@dimen/_4sdp"
+            app:rpbProgressColor="@color/white"
+            app:rpbShowProgressText="false"
+            app:rpbTextPadding="@dimen/_8sdp"
+            app:rpbTextSize="@dimen/_12ssp" />
 
     </RelativeLayout>
 

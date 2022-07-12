@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.iak.perstest.R
 import com.iak.perstest.adapter.QuizAdapter
 import com.iak.perstest.base.App
 import com.iak.perstest.databinding.FragQuizBinding
 import com.iak.perstest.viewmodel.QuestionViewModel
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
+import timber.log.Timber
 
 class QuizFrag : Fragment() {
     private var _binding: FragQuizBinding? = null
@@ -55,8 +57,12 @@ class QuizFrag : Fragment() {
     }
 
     private fun init() {
+        layout.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         questions = viewModel.getQuestions()
-        answers = ArrayList(questions.size)
+        answers = MutableList(questions.size) { false }
 
         val callback = object : QuizAdapter.ClickListener {
             override fun onTrue() {
@@ -74,6 +80,10 @@ class QuizFrag : Fragment() {
             override fun canScrollHorizontally(): Boolean {
                 return false
             }
+
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
         }
         layout.recycler.itemAnimator = SlideInUpAnimator()
         layout.recycler.adapter = adapter
@@ -82,11 +92,19 @@ class QuizFrag : Fragment() {
     private fun nextQuestion(answer: Boolean) {
         if (position < questions.size) {
             answers[position] = answer
-            layout.recycler.scrollToPosition(position)
             position++
+            layout.recycler.scrollToPosition(position)
+            val percentage = ((position / questions.size) / 100).toDouble()
+            Timber.d("Pos:${position}, Total:${questions.size}, Perc:$percentage")
+            layout.progressBar.setProgressPercentage(percentage, shouldAnimate = false)
         } else {
             // show results screen
-            var outcome = viewModel.getAssessment(answers)
+            val outcome = viewModel.getAssessment(answers)
+            val args = Bundle()
+            args.putString("data", outcome)
+            findNavController().popBackStack(R.id.quizFrag, true)
+            findNavController().navigate(R.id.actionResult, args)
+
         }
     }
 }

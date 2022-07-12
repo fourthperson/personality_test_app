@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/resultsFrag"
-        android:name="com.iak.perstest.ui.quiz.QuizFrag"
+        android:name="com.iak.perstest.ui.result.ResultFrag"
         android:label="Results"
         tools:layout="@layout/frag_results" />
 
@@ -35,6 +35,10 @@
 
     <action
         android:id="@+id/actionQuiz"
+        app:destination="@id/quizFrag" />
+
+    <action
+        android:id="@+id/actionResult"
         app:destination="@id/quizFrag" />
 
 </navigation>

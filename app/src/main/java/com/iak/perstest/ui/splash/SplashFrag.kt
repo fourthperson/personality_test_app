@@ -31,6 +31,7 @@ class SplashFrag : Fragment() {
     private fun animate() {
         val listener = object : Animator.AnimatorListener {
             override fun onAnimationEnd(p0: Animator?) {
+                findNavController().popBackStack(R.id.splashFrag, true)
                 findNavController().navigate(R.id.actionLanding)
             }
 

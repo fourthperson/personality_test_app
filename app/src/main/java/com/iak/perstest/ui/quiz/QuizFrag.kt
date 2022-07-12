@@ -32,6 +32,8 @@ class QuizFrag : Fragment() {
 
     private var position: Int = 0
 
+    private var questionCount = 1;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = App.vmFactory.create(QuestionViewModel::class.java)
@@ -90,21 +92,22 @@ class QuizFrag : Fragment() {
     }
 
     private fun nextQuestion(answer: Boolean) {
-        if (position < questions.size) {
-            answers[position] = answer
-            position++
-            layout.recycler.scrollToPosition(position)
-            val percentage = ((position / questions.size) / 100).toDouble()
-            Timber.d("Pos:${position}, Total:${questions.size}, Perc:$percentage")
-            layout.progressBar.setProgressPercentage(percentage, shouldAnimate = false)
-        } else {
+        questionCount++;
+        if (questionCount == questions.size) {
             // show results screen
             val outcome = viewModel.getAssessment(answers)
             val args = Bundle()
             args.putString("data", outcome)
             findNavController().popBackStack(R.id.quizFrag, true)
             findNavController().navigate(R.id.actionResult, args)
-
+            return;
+        }
+        if (position < questions.size) {
+            answers[position] = answer
+            position++
+            layout.recycler.scrollToPosition(position)
+            val percentage = (position.toDouble() / questions.size) * 100.0
+            layout.progressBar.setProgressPercentage(percentage)
         }
     }
 }

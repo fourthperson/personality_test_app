@@ -43,12 +43,49 @@
             android:layout_above="@id/progress_bar"
             android:layout_below="@id/top_bar" />
 
+        <LinearLayout
+            android:id="@+id/question_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/progress_bar"
+            android:layout_below="@id/top_bar"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/_32sdp">
+
+            <TextView
+                android:id="@+id/text_question"
+                style="@style/TextWhite"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/size32"
+                android:width="@dimen/_240sdp"
+                android:minLines="6"
+                android:textSize="@dimen/text16" />
+
+            <TextView
+                android:id="@+id/button_true"
+                style="@style/ButtonWhite"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/size16"
+                android:text="@string/label_true"
+                android:textSize="@dimen/text16" />
+
+            <TextView
+                android:id="@+id/button_false"
+                style="@style/ButtonSec"
+                android:layout_width="match_parent"
+                android:maxWidth="@dimen/_180sdp"
+                android:text="@string/label_false"
+                android:textSize="@dimen/text16" />
+
+        </LinearLayout>
+
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_10sdp"
             android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/_16sdp"
+            android:layout_margin="@dimen/_32sdp"
             app:rpbBackgroundColor="?colorPrimary"
             app:rpbCornerRadius="@dimen/_4sdp"
             app:rpbProgressColor="@color/white"

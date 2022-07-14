@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PersonalityTest</string>
+    <string name="app_name">P-Test</string>
     <string name="start_test">Start test</string>
     <string name="landing_rationale">On a basic level, the personality of all humans falls into two categories:\nextroverts and introverts.\nAnswer a few quick questions to determine your category.</string>
     <string name="start_title">Introvert or Extrovert?</string>
@@ -8,4 +8,5 @@
     <string name="label_false">False</string>
     <string name="title_results">Results</string>
     <string name="go_back">Go Back</string>
+    <string name="result_template">You are:</string>
 </resources>

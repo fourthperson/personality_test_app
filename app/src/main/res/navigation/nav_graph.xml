@@ -39,6 +39,6 @@
 
     <action
         android:id="@+id/actionResult"
-        app:destination="@id/quizFrag" />
+        app:destination="@id/resultsFrag" />
 
 </navigation>

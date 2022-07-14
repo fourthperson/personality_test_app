@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.iak.perstest.R
 import com.iak.perstest.adapter.QuizAdapter
 import com.iak.perstest.base.App
 import com.iak.perstest.databinding.FragQuizBinding
+import com.iak.perstest.ui.result.ResultFrag
 import com.iak.perstest.viewmodel.QuestionViewModel
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
-import timber.log.Timber
 
 class QuizFrag : Fragment() {
     private var _binding: FragQuizBinding? = null
@@ -26,13 +26,11 @@ class QuizFrag : Fragment() {
 
     private lateinit var viewModel: QuestionViewModel
 
-    private lateinit var adapter: QuizAdapter
-
     private lateinit var _context: Context
 
-    private var position: Int = 0
+    private lateinit var adapter: QuizAdapter
 
-    private var questionCount = 1;
+    private var position: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +57,8 @@ class QuizFrag : Fragment() {
     }
 
     private fun init() {
+        layout.questionGroup.visibility = View.GONE
+
         layout.backButton.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -66,48 +66,56 @@ class QuizFrag : Fragment() {
         questions = viewModel.getQuestions()
         answers = MutableList(questions.size) { false }
 
+        position = 0
+
         val callback = object : QuizAdapter.ClickListener {
             override fun onTrue() {
-                nextQuestion(true)
+                answers[position] = true
+                next()
             }
 
             override fun onFalse() {
-                nextQuestion(false)
+                answers[position] = false
+                next()
             }
         }
+
+        val layoutManager =
+            object : LinearLayoutManager(_context, HORIZONTAL, false) {
+                override fun canScrollHorizontally(): Boolean {
+                    return false
+                }
+
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
 
         adapter = QuizAdapter(questions, callback)
-        layout.recycler.layoutManager = object :
-            LinearLayoutManager(_context, HORIZONTAL, false) {
-            override fun canScrollHorizontally(): Boolean {
-                return false
-            }
 
-            override fun canScrollVertically(): Boolean {
-                return false
-            }
-        }
-        layout.recycler.itemAnimator = SlideInUpAnimator()
+        layout.recycler.layoutManager = layoutManager
+        layout.recycler.itemAnimator = DefaultItemAnimator()
         layout.recycler.adapter = adapter
+
+        layout.recycler.scrollToPosition(position)
     }
 
-    private fun nextQuestion(answer: Boolean) {
-        questionCount++;
-        if (questionCount == questions.size) {
-            // show results screen
-            val outcome = viewModel.getAssessment(answers)
-            val args = Bundle()
-            args.putString("data", outcome)
-            findNavController().popBackStack(R.id.quizFrag, true)
-            findNavController().navigate(R.id.actionResult, args)
-            return;
-        }
-        if (position < questions.size) {
-            answers[position] = answer
+    private fun next() {
+        if (position < questions.size - 1) {
             position++
             layout.recycler.scrollToPosition(position)
             val percentage = (position.toDouble() / questions.size) * 100.0
             layout.progressBar.setProgressPercentage(percentage)
+        } else {
+            completeQuiz()
         }
+    }
+
+    private fun completeQuiz() {
+        val outcome = viewModel.getAssessment(answers)
+        val args = Bundle()
+        args.putString(ResultFrag.Data, outcome)
+        findNavController().popBackStack(R.id.quizFrag, true)
+        findNavController().navigate(R.id.actionResult, args)
     }
 }

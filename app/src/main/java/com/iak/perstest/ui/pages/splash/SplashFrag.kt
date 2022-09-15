@@ -1,4 +1,4 @@
-package com.iak.perstest.ui.splash
+package com.iak.perstest.ui.pages.splash
 
 import android.animation.Animator
 import android.os.Bundle

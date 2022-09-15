@@ -1,8 +1,7 @@
-package com.iak.perstest.base
+package com.iak.perstest
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
-import com.iak.perstest.BuildConfig
 import timber.log.Timber
 
 class App : Application() {
@@ -13,6 +12,8 @@ class App : Application() {
     }
 
     override fun onCreate() {
+        // hilt dependency injection
+        // koin dependency injection
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

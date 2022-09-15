@@ -6,6 +6,7 @@ class QuestionRepo {
         var instance = QuestionRepo()
     }
 
+    // move to array resource
     private val questions = listOf(
         "I prefer one-on-one conversations to group activities",
         "I often prefer to express myself in writing",
@@ -34,18 +35,18 @@ class QuestionRepo {
     }
 
     fun assessAnswers(answers: List<Boolean>): String {
-        var trueCount = 0
-        var falseCount = 0
+        var introvertCount = 0
+        var extrovertCount = 0
         for (answer in answers) {
             if (answer) {
-                trueCount++
+                introvertCount++
             } else {
-                falseCount++
+                extrovertCount++
             }
         }
-        val verdict: String = if (trueCount > falseCount) {
+        val verdict: String = if (introvertCount > extrovertCount) {
             "Introverted"
-        } else if (falseCount > trueCount) {
+        } else if (extrovertCount > introvertCount) {
             "Extroverted"
         } else {
             "Balanced"

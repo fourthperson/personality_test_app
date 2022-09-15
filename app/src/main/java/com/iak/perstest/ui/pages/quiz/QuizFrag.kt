@@ -1,19 +1,17 @@
-package com.iak.perstest.ui.quiz
+package com.iak.perstest.ui.pages.quiz
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.iak.perstest.R
-import com.iak.perstest.adapter.QuizAdapter
-import com.iak.perstest.base.App
+import com.iak.perstest.ui.adapter.ViewPager2Adapter
+import com.iak.perstest.App
+import com.iak.perstest.data.entity.Question
 import com.iak.perstest.databinding.FragQuizBinding
-import com.iak.perstest.ui.result.ResultFrag
+import com.iak.perstest.ui.pages.result.ResultFrag
 import com.iak.perstest.viewmodel.QuestionViewModel
 
 class QuizFrag : Fragment() {
@@ -26,11 +24,14 @@ class QuizFrag : Fragment() {
 
     private lateinit var viewModel: QuestionViewModel
 
-    private lateinit var _context: Context
-
-    private lateinit var adapter: QuizAdapter
+    private lateinit var adapter: ViewPager2Adapter
 
     private var position: Int = -1
+
+    interface QuizCallback {
+        fun onTrue()
+        fun onFalse()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,64 +47,53 @@ class QuizFrag : Fragment() {
         return layout.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        _context = context
-    }
-
     override fun onStart() {
         super.onStart()
         init()
     }
 
     private fun init() {
-        layout.questionGroup.visibility = View.GONE
-
         layout.backButton.setOnClickListener {
             findNavController().popBackStack()
         }
 
+        layout.pager.isUserInputEnabled = false
+
         questions = viewModel.getQuestions()
         answers = MutableList(questions.size) { false }
 
-        position = 0
-
-        val callback = object : QuizAdapter.ClickListener {
+        val callback = object : QuizCallback {
             override fun onTrue() {
-                answers[position] = true
-                next()
+                answer(true)
             }
 
             override fun onFalse() {
-                answers[position] = false
-                next()
+                answer(false)
             }
         }
 
-        val layoutManager =
-            object : LinearLayoutManager(_context, HORIZONTAL, false) {
-                override fun canScrollHorizontally(): Boolean {
-                    return false
-                }
+        adapter = ViewPager2Adapter(requireActivity())
 
-                override fun canScrollVertically(): Boolean {
-                    return false
-                }
-            }
+        questions.forEach { q ->
+            val frag = QuestionFrag.instance(Question(q))
+            frag.setCallback(callback)
+            adapter.addFragment(frag, "")
+        }
 
-        adapter = QuizAdapter(questions, callback)
+        layout.pager.adapter = adapter
 
-        layout.recycler.layoutManager = layoutManager
-        layout.recycler.itemAnimator = DefaultItemAnimator()
-        layout.recycler.adapter = adapter
+        position = 0
+    }
 
-        layout.recycler.scrollToPosition(position)
+    private fun answer(answer: Boolean) {
+        answers[position] = answer
+        next()
     }
 
     private fun next() {
         if (position < questions.size - 1) {
             position++
-            layout.recycler.scrollToPosition(position)
+            layout.pager.setCurrentItem(position, true)
             val percentage = (position.toDouble() / questions.size) * 100.0
             layout.progressBar.setProgressPercentage(percentage)
         } else {

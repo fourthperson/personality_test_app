@@ -1,4 +1,4 @@
-package com.iak.perstest.ui.landing
+package com.iak.perstest.ui.pages.landing
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,8 +22,8 @@ class LandingFrag : Fragment() {
         return layout.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
     }
 

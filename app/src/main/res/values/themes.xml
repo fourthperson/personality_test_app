@@ -47,7 +47,7 @@
         <item name="android:textSize">@dimen/text16</item>
         <item name="android:background">@drawable/button_secondary</item>
         <item name="android:padding">@dimen/size10</item>
-        <item name="android:minWidth">@dimen/_150sdp</item>
+        <item name="android:minWidth">@dimen/_120sdp</item>
     </style>
 
     <style name="ButtonWhite">
@@ -59,7 +59,7 @@
         <item name="android:textSize">@dimen/text16</item>
         <item name="android:background">@drawable/button_white</item>
         <item name="android:padding">@dimen/size10</item>
-        <item name="android:minWidth">@dimen/_150sdp</item>
+        <item name="android:minWidth">@dimen/_120sdp</item>
     </style>
 
     <style name="TextBase">

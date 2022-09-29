@@ -1,4 +1,4 @@
-package com.iak.perstest.ui.adapter
+package com.iak.perstest.presentation.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

@@ -1,4 +1,4 @@
-package com.iak.perstest.ui.pages.landing
+package com.iak.perstest.presentation.ui.pages.landing
 
 import android.os.Bundle
 import android.view.LayoutInflater

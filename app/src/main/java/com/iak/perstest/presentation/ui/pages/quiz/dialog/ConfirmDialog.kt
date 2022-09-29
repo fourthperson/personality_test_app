@@ -1,4 +1,4 @@
-package com.iak.perstest.ui.pages.quiz
+package com.iak.perstest.presentation.ui.pages.quiz.dialog
 
 import android.content.DialogInterface
 import android.graphics.Color

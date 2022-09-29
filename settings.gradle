@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "personality_test_app"
 include ':app'
+include ':domain'

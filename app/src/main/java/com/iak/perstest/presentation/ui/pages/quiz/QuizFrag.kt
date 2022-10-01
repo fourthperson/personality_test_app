@@ -1,11 +1,13 @@
 package com.iak.perstest.presentation.ui.pages.quiz
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,8 +15,8 @@ import com.iak.perstest.R
 import com.iak.perstest.databinding.CofnirmDialogBinding
 import com.iak.perstest.databinding.FragQuizBinding
 import com.iak.perstest.presentation.ui.adapter.ViewPager2Adapter
+import com.iak.perstest.presentation.ui.pages.result.ResultFrag
 import com.iak.perstest.presentation.util.Status
-import com.iak.perstest.ui.pages.result.ResultFrag
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -80,7 +82,7 @@ class QuizFrag : Fragment() {
         viewModel.questions.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-//                    layout.loader.visibility = View.GONE
+                    layout.loader.visibility = View.GONE
                     resource.data?.let { questions ->
                         questions.forEach { q ->
                             val frag = QuestionFrag.instance(q)
@@ -92,11 +94,11 @@ class QuizFrag : Fragment() {
                 }
 
                 Status.LOADING -> {
-//                    layout.loader.visibility = View.VISIBLE
+                    layout.loader.visibility = View.VISIBLE
                 }
 
                 Status.ERROR -> {
-//                    layout.loader.visibility = View.GONE
+                    layout.loader.visibility = View.GONE
                     retryDialog(resource.message!!, true)
                 }
             }
@@ -105,18 +107,18 @@ class QuizFrag : Fragment() {
         viewModel.assessment.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-//                    layout.loader.visibility = View.GONE
+                    layout.loader.visibility = View.GONE
                     resource.data?.let { outcome ->
                         nav(outcome)
                     }
                 }
 
                 Status.LOADING -> {
-//                    layout.loader.visibility = View.VISIBLE
+                    layout.loader.visibility = View.VISIBLE
                 }
 
                 Status.ERROR -> {
-//                    layout.loader.visibility = View.GONE
+                    layout.loader.visibility = View.GONE
                     retryDialog(resource.message!!, false)
                 }
             }
@@ -131,14 +133,12 @@ class QuizFrag : Fragment() {
     private fun retryDialog(message: String, isQuestion: Boolean) {
         val dialogView = CofnirmDialogBinding.inflate(layoutInflater)
 
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setCancelable(false)
-        builder.setView(dialogView.root)
-
-        val dialog = builder.create()
+        val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(dialogView.root)
 
         dialog.show()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialogView.title.text = message
         dialogView.buttonYes.text = getString(R.string.label_retry)
@@ -152,8 +152,6 @@ class QuizFrag : Fragment() {
             }
         }
         dialogView.buttonNo.setOnClickListener { dialog.dismiss() }
-
-        dialog.show()
     }
 
     private fun nav(outcome: String) {

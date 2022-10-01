@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.iak.perstest.databinding.FragQuestionBinding
 import com.iak.perstest.presentation.entity.Question
-import com.iak.perstest.presentation.ui.pages.quiz.dialog.ConfirmDialog
+import com.iak.perstest.presentation.ui.pages.dialog.ConfirmDialog
 import timber.log.Timber
 
 class QuestionFrag : Fragment() {

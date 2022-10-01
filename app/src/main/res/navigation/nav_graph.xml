@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/splashFrag"
-        android:name="com.iak.perstest.ui.pages.splash.SplashFrag"
+        android:name="com.iak.perstest.presentation.ui.pages.splash.SplashFrag"
         android:label="Splash"
         tools:layout="@layout/frag_splash" />
 
     <fragment
         android:id="@+id/landingFrag"
-        android:name="com.iak.perstest.ui.pages.landing.LandingFrag"
+        android:name="com.iak.perstest.presentation.ui.pages.landing.LandingFrag"
         android:label="Landing"
         tools:layout="@layout/frag_landing" />
 
     <fragment
         android:id="@+id/quizFrag"
-        android:name="com.iak.perstest.ui.pages.quiz.QuizFrag"
+        android:name="com.iak.perstest.presentation.ui.pages.quiz.QuizFrag"
         android:label="Quiz"
         tools:layout="@layout/frag_quiz" />
 
     <fragment
         android:id="@+id/resultsFrag"
-        android:name="com.iak.perstest.ui.pages.result.ResultFrag"
+        android:name="com.iak.perstest.presentation.ui.pages.result.ResultFrag"
         android:label="Results"
         tools:layout="@layout/frag_results" />
 

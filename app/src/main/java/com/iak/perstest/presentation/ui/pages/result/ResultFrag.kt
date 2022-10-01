@@ -1,4 +1,4 @@
-package com.iak.perstest.ui.pages.result
+package com.iak.perstest.presentation.ui.pages.result
 
 import android.content.Context
 import android.os.Bundle

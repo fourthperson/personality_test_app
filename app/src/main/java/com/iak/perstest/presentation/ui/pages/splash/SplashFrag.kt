@@ -1,4 +1,4 @@
-package com.iak.perstest.ui.pages.splash
+package com.iak.perstest.presentation.ui.pages.splash
 
 import android.animation.Animator
 import android.os.Bundle
@@ -29,22 +29,6 @@ class SplashFrag : Fragment() {
     }
 
     private fun animate() {
-//        val listener = object : Animator.AnimatorListener {
-//            override fun onAnimationEnd(p0: Animator?) {
-//                findNavController().popBackStack(R.id.splashFrag, true)
-//                findNavController().navigate(R.id.actionLanding)
-//            }
-//
-//            override fun onAnimationCancel(p0: Animator?) {
-//            }
-//
-//            override fun onAnimationStart(p0: Animator?) {
-//            }
-//
-//            override fun onAnimationRepeat(p0: Animator?) {
-//            }
-//        }
-
         val listener = object : Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator) {
 

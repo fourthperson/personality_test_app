@@ -1,4 +1,4 @@
-package com.iak.perstest.ui.pages
+package com.iak.perstest.presentation.ui.pages
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

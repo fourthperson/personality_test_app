@@ -5,13 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.iak.perstest.R
 import com.iak.perstest.databinding.FragLandingBinding
+import com.iak.perstest.presentation.ui.base.EventObserver
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LandingFrag : Fragment() {
     private var _binding: FragLandingBinding? = null
     private val layout get() = _binding!!
+
+    private val viewModel: LandingViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,8 +33,12 @@ class LandingFrag : Fragment() {
     }
 
     private fun init() {
+        viewModel.navigator.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(it)
+        })
+
         layout.buttonStart.setOnClickListener {
-            findNavController().navigate(R.id.actionQuiz)
+            viewModel.navigate()
         }
     }
 }

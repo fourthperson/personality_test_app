@@ -1,7 +1,6 @@
 package com.iak.perstest.data.repository
 
 import com.iak.perstest.data.api.ApiHelper
-import com.iak.perstest.data.api.ApiHelperImpl
 import com.iak.perstest.data.entity.MarkRequest
 import javax.inject.Inject
 

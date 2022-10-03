@@ -1,37 +1,30 @@
 package com.iak.perstest.presentation.ui.pages.quiz
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.iak.perstest.R
-import com.iak.perstest.databinding.CofnirmDialogBinding
 import com.iak.perstest.databinding.FragQuizBinding
 import com.iak.perstest.presentation.ui.adapter.ViewPager2Adapter
+import com.iak.perstest.presentation.ui.base.BaseFrag
+import com.iak.perstest.presentation.ui.pages.dialog.ConfirmDialog
+import com.iak.perstest.presentation.ui.pages.dialog.MessageDialog
 import com.iak.perstest.presentation.ui.pages.result.ResultFrag
 import com.iak.perstest.presentation.util.Status
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import timber.log.Timber
 
 @AndroidEntryPoint
-class QuizFrag : Fragment() {
+class QuizFrag : BaseFrag() {
     private var _binding: FragQuizBinding? = null
     private val layout get() = _binding!!
 
-    private lateinit var adapter: ViewPager2Adapter
-
-    private val viewModel: QuizViewModel by viewModels()
-
-    interface QuizCallback {
-        fun onTrue()
-        fun onFalse()
-    }
+    private val viewModel: QuizFragViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,13 +32,43 @@ class QuizFrag : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragQuizBinding.inflate(inflater, container, false)
-
         return layout.root
     }
 
     override fun onStart() {
         super.onStart()
+        EventBus.getDefault().register(this)
         init()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe
+    fun onMessageEvent(event: ConfirmDialog.ConfirmOutcome) {
+        if (event.outcome) {
+            viewModel.answer(true)
+        } else {
+            viewModel.answer(false)
+        }
+    }
+
+    @Subscribe
+    fun onMessageEvent(event: MessageDialog.MessageOutcome) {
+        if (event.sender.startsWith("confirm_retry:")) {
+            val retryQuestion = event.sender.split(":")[1].toBoolean()
+            if (event.accepted) {
+                if (retryQuestion) {
+                    viewModel.getQuestions()
+                } else {
+                    viewModel.getEvaluation()
+                }
+            } else {
+                findNavController().popBackStack()
+            }
+        }
     }
 
     private fun init() {
@@ -55,16 +78,12 @@ class QuizFrag : Fragment() {
 
         layout.pager.isUserInputEnabled = false
 
-        adapter = ViewPager2Adapter(requireActivity())
+        val adapter = ViewPager2Adapter(requireActivity())
 
-        val callback = object : QuizCallback {
-            override fun onTrue() {
-                viewModel.answer(true)
-            }
+        layout.pager.adapter = adapter
 
-            override fun onFalse() {
-                viewModel.answer(false)
-            }
+        viewModel.navigator.observe(viewLifecycleOwner) {
+            
         }
 
         viewModel.quizCompleted.observe(viewLifecycleOwner) { completed ->
@@ -85,9 +104,12 @@ class QuizFrag : Fragment() {
                     layout.loader.visibility = View.GONE
                     resource.data?.let { questions ->
                         questions.forEach { q ->
-                            val frag = QuestionFrag.instance(q)
-                            frag.setCallback(callback)
-                            adapter.addFragment(frag, "")
+                            try {
+                                val frag = QuestionFrag.instance(q)
+                                adapter.addFragment(frag, "")
+                            } catch (e: Exception) {
+                                Timber.e(e)
+                            }
                         }
                         layout.pager.adapter = adapter
                     }
@@ -131,27 +153,15 @@ class QuizFrag : Fragment() {
     }
 
     private fun retryDialog(message: String, isQuestion: Boolean) {
-        val dialogView = CofnirmDialogBinding.inflate(layoutInflater)
+        val retryDialog =
+            MessageDialog.instance(
+                message,
+                getString(R.string.label_retry),
+                getString(R.string.label_cancel),
+                "confirm_retry:$isQuestion"
+            )
 
-        val dialog = Dialog(requireContext())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(dialogView.root)
-
-        dialog.show()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        dialogView.title.text = message
-        dialogView.buttonYes.text = getString(R.string.label_retry)
-        dialogView.buttonNo.text = getString(R.string.label_cancel)
-
-        dialogView.buttonYes.setOnClickListener {
-            if (isQuestion) {
-                viewModel.getQuestions()
-            } else {
-                viewModel.getEvaluation()
-            }
-        }
-        dialogView.buttonNo.setOnClickListener { dialog.dismiss() }
+        showDialog(retryDialog, MessageDialog.Tag)
     }
 
     private fun nav(outcome: String) {

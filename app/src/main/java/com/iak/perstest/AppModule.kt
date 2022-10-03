@@ -27,7 +27,7 @@ class AppModule {
 
     @Provides
     fun provideBaseUrl(): String {
-        return BuildConfig.BASE_URL;
+        return BuildConfig.BASE_URL
     }
 
     @Provides
@@ -63,11 +63,11 @@ class AppModule {
     @Provides
     @Singleton
     fun provideQuestionRepository(apiHelper: ApiHelper): QuestionRepository {
-        return QuestionRepository(apiHelper);
+        return QuestionRepository(apiHelper)
     }
 
     @Provides
     fun provideGetQuestionsUseCase(questionRepository: QuestionRepository): GetQuestionsUseCase {
-        return GetQuestionsUseCase(questionRepository);
+        return GetQuestionsUseCase(questionRepository)
     }
 }

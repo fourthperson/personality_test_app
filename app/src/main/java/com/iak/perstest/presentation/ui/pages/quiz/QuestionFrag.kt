@@ -1,37 +1,21 @@
 package com.iak.perstest.presentation.ui.pages.quiz
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.iak.perstest.databinding.FragQuestionBinding
 import com.iak.perstest.presentation.entity.Question
+import com.iak.perstest.presentation.ui.base.BaseFrag
 import com.iak.perstest.presentation.ui.pages.dialog.ConfirmDialog
-import timber.log.Timber
 
-class QuestionFrag : Fragment() {
+
+class QuestionFrag : BaseFrag() {
     private var _binding: FragQuestionBinding? = null
     private val layout get() = _binding!!
 
     private lateinit var question: Question
-
-    private var quizCallback: QuizFrag.QuizCallback? = null
-
-    private val confirmCallback = object : ConfirmDialog.ConfirmCallback {
-        override fun onConfirm(answer: Boolean, dialog: DialogInterface?) {
-            if (answer) {
-                quizCallback?.onTrue()
-            } else {
-                quizCallback?.onFalse()
-            }
-        }
-
-        override fun onCancel(dialog: DialogInterface?) {
-        }
-    }
 
     companion object {
         private const val dataKey: String = "data"
@@ -51,7 +35,11 @@ class QuestionFrag : Fragment() {
         question = Gson().fromJson(data, Question::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragQuestionBinding.inflate(inflater, container, false)
         return layout.root
     }
@@ -59,10 +47,6 @@ class QuestionFrag : Fragment() {
     override fun onStart() {
         super.onStart()
         init()
-    }
-
-    fun setCallback(callback: QuizFrag.QuizCallback) {
-        quizCallback = callback
     }
 
     private fun init() {
@@ -73,18 +57,7 @@ class QuestionFrag : Fragment() {
 
     private fun confirm(answer: Boolean) {
         val dialog = ConfirmDialog.instance(answer)
-        dialog.setCallback(confirmCallback)
 
-        try {
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            val prev = requireActivity().supportFragmentManager.findFragmentByTag(ConfirmDialog.Tag)
-            if (prev != null) {
-                transaction.remove(prev)
-            }
-            transaction.addToBackStack(null)
-            dialog.show(transaction, ConfirmDialog.Tag)
-        } catch (e: IllegalStateException) {
-            Timber.e(e)
-        }
+        showDialog(dialog, ConfirmDialog.Tag)
     }
 }

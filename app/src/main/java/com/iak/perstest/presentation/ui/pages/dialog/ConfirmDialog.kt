@@ -1,6 +1,5 @@
 package com.iak.perstest.presentation.ui.pages.dialog
 
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.iak.perstest.databinding.CofnirmDialogBinding
+import androidx.fragment.app.viewModels
+import com.iak.perstest.databinding.ConfirmDialogBinding
 
 class ConfirmDialog : DialogFragment() {
-    private var _binding: CofnirmDialogBinding? = null
+    private var _binding: ConfirmDialogBinding? = null
     private val layout get() = _binding!!
+
+    data class ConfirmOutcome(val outcome: Boolean)
 
     companion object {
         const val Tag: String = "confirm_dialog"
@@ -27,22 +29,21 @@ class ConfirmDialog : DialogFragment() {
         }
     }
 
-    interface ConfirmCallback {
-        fun onConfirm(answer: Boolean, dialog: DialogInterface?)
-        fun onCancel(dialog: DialogInterface?)
-    }
+    private val viewModel: ConfirmDialogViewModel by viewModels()
 
     private var answer: Boolean? = null
-
-    private var callback: ConfirmCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         answer = requireArguments().getBoolean(dataKey)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = CofnirmDialogBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = ConfirmDialogBinding.inflate(inflater, container, false)
         return layout.root
     }
 
@@ -54,18 +55,13 @@ class ConfirmDialog : DialogFragment() {
         init()
     }
 
-    fun setCallback(callback: ConfirmCallback) {
-        this.callback = callback
-    }
-
     private fun init() {
         layout.buttonYes.setOnClickListener {
             dismiss()
-            callback?.onConfirm(answer!!, dialog)
+            viewModel.interact(answer!!)
         }
         layout.buttonNo.setOnClickListener {
             dismiss()
-            callback?.onCancel(dialog)
         }
     }
 }

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.gson.Gson
 import com.iak.perstest.databinding.FragQuestionBinding
-import com.iak.perstest.presentation.entity.Question
+import com.iak.perstest.domain.entity.Question
 import com.iak.perstest.presentation.ui.base.BaseFrag
 import com.iak.perstest.presentation.ui.pages.dialog.ConfirmDialog
 

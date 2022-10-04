@@ -14,4 +14,9 @@
     <string name="label_yes">Yes</string>
     <string name="label_retry">Retry</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_history">Test History</string>
+    <string name="you_are">You are</string>
+    <string name="unable_to_load_questions">Unable to load questions</string>
+    <string name="unable_to_load_assessment">Unable to load assessment</string>
+    <string name="unable_to_connect">Unable to connect to the internet</string>
 </resources>

@@ -12,7 +12,7 @@ import com.iak.perstest.presentation.ui.adapter.ViewPager2Adapter
 import com.iak.perstest.presentation.ui.base.BaseFrag
 import com.iak.perstest.presentation.ui.pages.dialog.ConfirmDialog
 import com.iak.perstest.presentation.ui.pages.dialog.MessageDialog
-import com.iak.perstest.presentation.ui.pages.result.ResultFrag
+import com.iak.perstest.presentation.util.ErrorType
 import com.iak.perstest.presentation.util.Status
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
@@ -24,7 +24,7 @@ class QuizFrag : BaseFrag() {
     private var _binding: FragQuizBinding? = null
     private val layout get() = _binding!!
 
-    private val viewModel: QuizFragViewModel by viewModels()
+    private val viewModel: QuizViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,22 +58,15 @@ class QuizFrag : BaseFrag() {
     @Subscribe
     fun onMessageEvent(event: MessageDialog.MessageOutcome) {
         if (event.sender.startsWith("confirm_retry:")) {
-            val retryQuestion = event.sender.split(":")[1].toBoolean()
-            if (event.accepted) {
-                if (retryQuestion) {
-                    viewModel.getQuestions()
-                } else {
-                    viewModel.getEvaluation()
-                }
-            } else {
-                findNavController().popBackStack()
-            }
+            viewModel.handleRetry(event)
         }
     }
 
     private fun init() {
+        viewModel.setNavController(findNavController())
+
         layout.backButton.setOnClickListener {
-            findNavController().popBackStack()
+            viewModel.navBack()
         }
 
         layout.pager.isUserInputEnabled = false
@@ -81,10 +74,6 @@ class QuizFrag : BaseFrag() {
         val adapter = ViewPager2Adapter(requireActivity())
 
         layout.pager.adapter = adapter
-
-        viewModel.navigator.observe(viewLifecycleOwner) {
-            
-        }
 
         viewModel.quizCompleted.observe(viewLifecycleOwner) { completed ->
             if (completed) {
@@ -121,7 +110,7 @@ class QuizFrag : BaseFrag() {
 
                 Status.ERROR -> {
                     layout.loader.visibility = View.GONE
-                    retryDialog(resource.message!!, true)
+                    retryDialog(resource.errorType, true)
                 }
             }
         }
@@ -131,7 +120,7 @@ class QuizFrag : BaseFrag() {
                 Status.SUCCESS -> {
                     layout.loader.visibility = View.GONE
                     resource.data?.let { outcome ->
-                        nav(outcome)
+                        viewModel.results(outcome.toString())
                     }
                 }
 
@@ -141,7 +130,7 @@ class QuizFrag : BaseFrag() {
 
                 Status.ERROR -> {
                     layout.loader.visibility = View.GONE
-                    retryDialog(resource.message!!, false)
+                    retryDialog(resource.errorType, false)
                 }
             }
         }
@@ -152,7 +141,14 @@ class QuizFrag : BaseFrag() {
         viewModel.getEvaluation()
     }
 
-    private fun retryDialog(message: String, isQuestion: Boolean) {
+    private fun retryDialog(error: ErrorType?, isQuestion: Boolean) {
+        var message = ""
+        if (error == ErrorType.FAILURE) {
+            message =
+                getString(if (isQuestion) R.string.unable_to_load_questions else R.string.unable_to_load_assessment)
+        } else if (error == ErrorType.NO_CONNECTION) {
+            message = getString(R.string.unable_to_connect)
+        }
         val retryDialog =
             MessageDialog.instance(
                 message,
@@ -162,12 +158,5 @@ class QuizFrag : BaseFrag() {
             )
 
         showDialog(retryDialog, MessageDialog.Tag)
-    }
-
-    private fun nav(outcome: String) {
-        val args = Bundle()
-        args.putString(ResultFrag.Data, outcome)
-        findNavController().popBackStack(R.id.quizFrag, true)
-        findNavController().navigate(R.id.actionResult, args)
     }
 }

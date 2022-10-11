@@ -1,7 +1,6 @@
 package com.iak.perstest
 
 import android.app.Application
-import com.google.gson.Gson
 import com.iak.perstest.data.data_source.LocalDataSource
 import com.iak.perstest.data.data_source.LocalDataSourceImpl
 import com.iak.perstest.data.data_source.RemoteDataSource
@@ -30,12 +29,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
-    @Provides
-    @Singleton
-    fun provideGson(): Gson {
-        return Gson()
-    }
-
     @Provides
     fun provideBaseUrl(): String {
         return BuildConfig.BASE_URL

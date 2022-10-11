@@ -7,7 +7,7 @@ import com.iak.perstest.domain.repo.QuizRepo
 
 class QuizRepositoryImpl(private val localDataSource: LocalDataSource) : QuizRepo {
     override fun getQuizHistory(): List<PastTest> {
-        val list = ArrayList<PastTest>();
+        val list = ArrayList<PastTest>()
         localDataSource.getPastQuizzes().forEach { pastQuiz ->
             list.add(PastTest(outcome = pastQuiz.outcome, date = pastQuiz.date))
         }

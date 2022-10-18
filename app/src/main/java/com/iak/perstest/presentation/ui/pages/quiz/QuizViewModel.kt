@@ -19,9 +19,9 @@ import com.iak.perstest.presentation.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
+import java.text.DateFormat
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,8 +30,7 @@ class QuizViewModel @Inject constructor(
     private val getEvaluationUseCase: GetEvaluationUseCase,
     private val addPastTestUseCase: AddPastTestUseCase,
     private val networkHelper: NetworkStatus,
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
     val questionsPerQuiz = 5
 
     private val _questions = MutableLiveData<Resource<MutableList<Question>>>()
@@ -82,18 +81,11 @@ class QuizViewModel @Inject constructor(
             _assessment.postValue(Resource.loading(null))
 
             if (networkHelper.connected()) {
-                var answersStr = ""
-                for (i in _answers.indices) {
-                    answersStr += _answers[i].toString() + if (i == _answers.size - 1) "" else ";"
-                }
-                Timber.i(answersStr)
-
-                getEvaluationUseCase.invoke(answersStr, _answers.size).let { result ->
+                getEvaluationUseCase.invoke(answerString(), _answers.size).let { result ->
                     if (result != null) {
                         // save completed outcome to local db
-                        val date = LocalDateTime.now()
-                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-                        addPastTestUseCase.invoke(PastTest(result.outcome, date))
+                        val pastTest = PastTest(result.outcome, timeString())
+                        addPastTestUseCase.invoke(pastTest)
                         // post results to ui
                         _assessment.postValue(Resource.success(result.outcome))
                     } else {
@@ -137,5 +129,18 @@ class QuizViewModel @Inject constructor(
         args.putString(ResultFrag.Data, outcome)
         _navController?.popBackStack(R.id.quizFrag, true)
         _navController?.navigate(R.id.actionResult, args)
+    }
+
+    private fun answerString(): String {
+        var answersStr = ""
+        for (i in _answers.indices) {
+            answersStr += _answers[i].toString() + if (i == _answers.size - 1) "" else ";"
+        }
+        Timber.i(answersStr)
+        return answersStr
+    }
+
+    private fun timeString(): String {
+        return DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date())
     }
 }

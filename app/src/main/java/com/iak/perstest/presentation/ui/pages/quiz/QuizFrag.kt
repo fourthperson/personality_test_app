@@ -27,9 +27,7 @@ class QuizFrag : BaseFrag() {
     private val viewModel: QuizViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragQuizBinding.inflate(inflater, container, false)
         return layout.root
@@ -145,18 +143,17 @@ class QuizFrag : BaseFrag() {
         var message = ""
         if (error == ErrorType.FAILURE) {
             message =
-                getString(if (isQuestion) R.string.unable_to_load_questions else R.string.unable_to_load_assessment)
+                if (isQuestion) getString(R.string.unable_to_load_questions) else getString(R.string.unable_to_load_assessment)
         } else if (error == ErrorType.NO_CONNECTION) {
             message = getString(R.string.unable_to_connect)
         }
-        val retryDialog =
-            MessageDialog.instance(
-                message,
-                getString(R.string.label_retry),
-                getString(R.string.label_cancel),
-                "confirm_retry:$isQuestion"
-            )
 
+        val retryDialog = MessageDialog.instance(
+            message,
+            getString(R.string.label_retry),
+            getString(R.string.label_cancel),
+            "confirm_retry:$isQuestion"
+        )
         showDialog(retryDialog, MessageDialog.Tag)
     }
 }

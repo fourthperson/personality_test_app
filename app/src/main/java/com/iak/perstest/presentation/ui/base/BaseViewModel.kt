@@ -4,13 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 
 open class BaseViewModel : ViewModel() {
-    var _navController: NavController? = null
-
-    fun setNavController(controller: NavController) {
-        _navController = controller
-    }
+    var navController: NavController? = null
 
     fun navBack() {
-        _navController?.popBackStack()
+        navController?.popBackStack()
     }
 }

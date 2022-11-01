@@ -31,7 +31,7 @@ class SplashFrag : Fragment() {
     }
 
     private fun init() {
-        viewModel.setNavController(findNavController())
+        viewModel.navController = findNavController()
         animate()
     }
 

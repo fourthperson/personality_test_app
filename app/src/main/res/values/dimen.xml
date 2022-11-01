@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="size5">@dimen/_5sdp</dimen>
-    <dimen name="size8">@dimen/_8sdp</dimen>
     <dimen name="size10">@dimen/_10sdp</dimen>
     <dimen name="size12">@dimen/_12sdp</dimen>
-    <dimen name="size15">@dimen/_15sdp</dimen>
     <dimen name="size16">@dimen/_16sdp</dimen>
-    <dimen name="size20">@dimen/_20sdp</dimen>
-    <dimen name="size24">@dimen/_24sdp</dimen>
     <dimen name="size28">@dimen/_28sdp</dimen>
     <dimen name="size32">@dimen/_32sdp</dimen>
-
-    <dimen name="button_radius">@dimen/_16sdp</dimen>
 
     <dimen name="text14">@dimen/_14ssp</dimen>
     <dimen name="text16">@dimen/_16ssp</dimen>
     <dimen name="text18">@dimen/_18ssp</dimen>
     <dimen name="text20">@dimen/_20ssp</dimen>
     <dimen name="text22">@dimen/_22ssp</dimen>
-    <dimen name="text24">@dimen/_25ssp</dimen>
 </resources>

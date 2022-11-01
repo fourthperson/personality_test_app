@@ -5,6 +5,6 @@ import com.iak.perstest.presentation.ui.base.BaseViewModel
 
 class LandingViewModel : BaseViewModel() {
     fun startQuiz() {
-        _navController?.navigate(R.id.actionQuiz)
+        navController?.navigate(R.id.actionQuiz)
     }
 }

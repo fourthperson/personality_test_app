@@ -120,15 +120,15 @@ class QuizViewModel @Inject constructor(
                 getEvaluation()
             }
         } else {
-            _navController?.popBackStack()
+            navController?.popBackStack()
         }
     }
 
     fun results(outcome: String) {
         val args = Bundle()
         args.putString(ResultFrag.Data, outcome)
-        _navController?.popBackStack(R.id.quizFrag, true)
-        _navController?.navigate(R.id.actionResult, args)
+        navController?.popBackStack(R.id.quizFrag, true)
+        navController?.navigate(R.id.actionResult, args)
     }
 
     private fun answerString(): String {

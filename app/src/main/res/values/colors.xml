@@ -6,12 +6,10 @@
 
     <color name="secondary">#89043d</color>
     <color name="secondaryDark">#560018</color>
-    <color name="secondarylight">#be4367</color>
+    <color name="secondaryLight">#be4367</color>
 
     <color name="textRegular">#939393</color>
-    <color name="textDark">#333333</color>
     <color name="textLighter">#c3c3c3</color>
 
     <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
 </resources>

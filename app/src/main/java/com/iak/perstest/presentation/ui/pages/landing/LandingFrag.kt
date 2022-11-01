@@ -32,7 +32,7 @@ class LandingFrag : Fragment() {
     }
 
     private fun init() {
-        viewModel.setNavController(findNavController())
+        viewModel.navController = findNavController()
 
         layout.buttonStart.setOnClickListener {
             viewModel.startQuiz()

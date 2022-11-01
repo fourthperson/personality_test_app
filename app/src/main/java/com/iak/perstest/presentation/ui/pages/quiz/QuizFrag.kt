@@ -61,7 +61,7 @@ class QuizFrag : BaseFrag() {
     }
 
     private fun init() {
-        viewModel.setNavController(findNavController())
+        viewModel.navController = findNavController()
 
         layout.backButton.setOnClickListener {
             viewModel.navBack()

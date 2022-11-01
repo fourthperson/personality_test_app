@@ -48,7 +48,7 @@ class ResultFrag : Fragment() {
     }
 
     private fun init() {
-        viewModel.setNavController(findNavController())
+        viewModel.navController = findNavController()
 
         layout.closeButton.setOnClickListener {
             viewModel.navBack()
@@ -72,7 +72,7 @@ class ResultFrag : Fragment() {
             viewModel.parade(
                 listOf(
                     ContextCompat.getColor(requireContext(), R.color.white),
-                    ContextCompat.getColor(requireContext(), R.color.secondarylight),
+                    ContextCompat.getColor(requireContext(), R.color.secondaryLight),
                     ContextCompat.getColor(requireContext(), R.color.light),
                 )
             )

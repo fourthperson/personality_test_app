@@ -5,7 +5,7 @@ import com.iak.perstest.presentation.ui.base.BaseViewModel
 
 class SplashViewModel : BaseViewModel() {
     fun landingPage() {
-        _navController?.popBackStack(R.id.splashFrag, true)
-        _navController?.navigate(R.id.actionLanding)
+        navController?.popBackStack(R.id.splashFrag, true)
+        navController?.navigate(R.id.actionLanding)
     }
 }

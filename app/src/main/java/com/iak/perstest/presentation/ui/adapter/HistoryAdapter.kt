@@ -11,11 +11,6 @@ class HistoryAdapter(private val data: List<PastTest>) : RecyclerView.Adapter<Hi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return VH(ItemHistoryBinding.inflate(LayoutInflater.from(parent.context)).root)
-//        return VH(
-//            ItemHistoryBinding.inflate(
-//                LayoutInflater.from(parent.context), parent, false
-//            ).root
-//        )
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {

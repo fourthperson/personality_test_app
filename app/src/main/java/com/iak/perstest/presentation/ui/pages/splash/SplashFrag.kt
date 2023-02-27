@@ -25,17 +25,18 @@ class SplashFrag : Fragment() {
         return layout.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
     override fun onStart() {
         super.onStart()
-        init()
+        animate()
     }
 
     private fun init() {
         viewModel.navController = findNavController()
-        animate()
-    }
-
-    private fun animate() {
         val listener = object : Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator) {
             }
@@ -51,6 +52,9 @@ class SplashFrag : Fragment() {
             }
         }
         layout.animationView.addAnimatorListener(listener)
+    }
+
+    private fun animate() {
         layout.animationView.playAnimation()
     }
 }

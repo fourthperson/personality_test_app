@@ -28,16 +28,9 @@ class ResultViewModel @Inject constructor(private val getPastTestsUseCase: GetPa
     val history: LiveData<List<PastTest>>
         get() = _history
 
-
-    init {
-        loadPastTestResults()
-    }
-
-    private fun loadPastTestResults() {
+    fun loadPastTestResults() {
         viewModelScope.launch(Dispatchers.IO) {
-            getPastTestsUseCase.invoke().let { result ->
-                _history.postValue(result)
-            }
+            getPastTestsUseCase.invoke().let { results -> _history.postValue(results) }
         }
     }
 

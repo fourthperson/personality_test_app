@@ -66,12 +66,16 @@ class MessageDialog : DialogFragment() {
         return layout.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
     override fun onStart() {
         super.onStart()
         if (dialog != null && dialog?.window != null) {
             requireDialog().window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
-        init()
     }
 
     private fun init() {

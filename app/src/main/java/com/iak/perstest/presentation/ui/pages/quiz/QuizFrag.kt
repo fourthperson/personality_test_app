@@ -33,10 +33,15 @@ class QuizFrag : BaseFrag() {
         return layout.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
-        init()
+        viewModel.getQuestions();
     }
 
     override fun onStop() {

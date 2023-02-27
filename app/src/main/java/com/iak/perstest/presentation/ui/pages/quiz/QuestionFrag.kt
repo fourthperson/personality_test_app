@@ -10,7 +10,6 @@ import com.iak.perstest.domain.entity.Question
 import com.iak.perstest.presentation.ui.base.BaseFrag
 import com.iak.perstest.presentation.ui.pages.dialog.ConfirmDialog
 
-
 class QuestionFrag : BaseFrag() {
     private var _binding: FragQuestionBinding? = null
     private val layout get() = _binding!!
@@ -44,8 +43,8 @@ class QuestionFrag : BaseFrag() {
         return layout.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
     }
 

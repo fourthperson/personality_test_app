@@ -51,11 +51,7 @@ class QuizViewModel @Inject constructor(
     val quizCompleted: LiveData<Boolean>
         get() = _quizCompleted
 
-    init {
-        getQuestions()
-    }
-
-    private fun getQuestions() {
+    fun getQuestions() {
         viewModelScope.launch(Dispatchers.IO) {
             _questions.postValue(Resource.loading(null))
 
@@ -84,8 +80,8 @@ class QuizViewModel @Inject constructor(
                 getEvaluationUseCase.invoke(answerString(), _answers.size).let { result ->
                     if (result != null) {
                         // save completed outcome to local db
-                        val pastTest = PastTest(result.outcome, timeString())
-                        addPastTestUseCase.invoke(pastTest)
+                        val completedTest = PastTest(result.outcome, timeString())
+                        addPastTestUseCase.invoke(completedTest)
                         // post results to ui
                         _assessment.postValue(Resource.success(result.outcome))
                     } else {
@@ -132,12 +128,12 @@ class QuizViewModel @Inject constructor(
     }
 
     private fun answerString(): String {
-        var answersStr = ""
+        var answerString = ""
         for (i in _answers.indices) {
-            answersStr += _answers[i].toString() + if (i == _answers.size - 1) "" else ";"
+            answerString += _answers[i].toString() + if (i == _answers.size - 1) "" else ";"
         }
-        Timber.i(answersStr)
-        return answersStr
+        Timber.i(answerString)
+        return answerString
     }
 
     private fun timeString(): String {
